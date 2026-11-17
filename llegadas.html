@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Llegadas de la semana · Medayork</title>
+<meta name="description" content="Lo último que llegó de Nueva York a Medellín esta semana en Medayork.">
+<meta name="theme-color" content="#1C1D1F">
+<meta property="og:title" content="Llegadas de la semana · Medayork">
+<meta property="og:description" content="Lo último que llegó de Nueva York a Medellín.">
+<meta property="og:image" content="https://medayork.pages.dev/img/og.jpg">
+<link rel="icon" type="image/png" href="img/icono-48.png">
+<link rel="apple-touch-icon" href="img/icono-180.png">
+<script>document.documentElement.className='js'</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Las letras cargan sin frenar la primera pantalla (media="print" y luego se activan) -->
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/estilos.css?v=20261116c">
+</head>
+<body>
+<!-- Página pensada para tomarle captura en el celular y subirla a historias (formato 9:16).
+     Muestra los productos que en la hoja tienen "nuevo = sí", de a 4 por pantalla. -->
+<main class="historia-f">
+  <div class="historia" id="historia">
+    <div class="h-cab">
+      <img src="img/estatua-claro.png" alt="Medayork" width="89" height="120">
+      <span class="mono">[ MDE ⇄ JFK ]</span>
+    </div>
+    <span class="sello">Original</span>
+    <h1 class="disp">Llegadas<br>de la semana</h1>
+    <div class="ser">Original style.</div>
+    <div class="h-rejilla" id="rejilla"></div>
+    <div class="h-pie">
+      <div class="mono">Pide por WhatsApp<br>@meda_yorkshop</div>
+      <span class="barras" aria-hidden="true"></span>
+    </div>
+  </div>
+  <div class="h-ctrl mono">
+    <button class="btn" id="ant" type="button">← Anterior</button>
+    <span id="pag"></span>
+    <button class="btn" id="sig" type="button">Siguiente →</button>
+    <a class="btn" href="index.html">Tienda</a>
+  </div>
+  <noscript><p style="color:#EFECE6;padding:14px">Activa JavaScript para ver las llegadas, o entra a la tienda.</p></noscript>
+</main>
+
+<script src="datos/conexion.js?v=20261116c"></script>
+<script src="datos/respaldo.js?v=20261116c"></script>
+<script src="js/datos.js?v=20261116c"></script>
+<script>
+(function(){
+  var MY=window.MY, POR_PANTALLA=4, pagina=0, lista=[];
+  var $=function(s){return document.querySelector(s)};
+  function pinta(){
+    var total=Math.max(1,Math.ceil(lista.length/POR_PANTALLA));
+    pagina=(pagina+total)%total;
+    var ver=lista.slice(pagina*POR_PANTALLA,pagina*POR_PANTALLA+POR_PANTALLA);
+    $('#rejilla').innerHTML=ver.length?ver.map(function(p){
+      return '<div class="h-item'+(p.seccion==='mujer'?' m':'')+'"><img src="'+MY.esc(MY.foto(p.fotos[0]))+'" alt="'+MY.esc(p.nombre+' '+(p.marca||''))+'" width="800" height="1000">'+
+        '<div><b>'+MY.esc(p.nombre)+(p.marca?' '+MY.esc(p.marca):'')+'</b>'+MY.precioHTML(p)+(p.tallas&&p.tallas.length?' · Talla '+MY.esc(p.tallas.join(' · ')):'')+'</div></div>';
+    }).join(''):'<p class="mono" style="grid-column:1/-1;align-self:center;text-align:center">Esta semana todavía no marcamos llegadas.</p>';
+    $('#pag').textContent=(pagina+1)+' de '+total;
+    $('#ant').hidden=$('#sig').hidden=total<2;
+  }
+  $('#ant').addEventListener('click',function(){pagina--;pinta()});
+  $('#sig').addEventListener('click',function(){pagina++;pinta()});
+  MY.cargar(function(d){
+    lista=d.productos.filter(function(p){return p.visible!==false&&p.nuevo&&p.fotos&&p.fotos.length&&p.estado!=='agotado'});
+    pinta();
+  });
+})();
+</script>
+</body>
+</html>

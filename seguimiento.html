@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="es" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sigue tu encargo · Medayork</title>
+<meta name="description" content="Consulta con tu código por dónde va tu encargo Medayork, desde Nueva York hasta Medellín.">
+<meta name="theme-color" content="#1C1D1F">
+<meta property="og:title" content="Sigue tu encargo · Medayork">
+<meta property="og:description" content="Consulta con tu código por dónde va tu encargo.">
+<meta property="og:image" content="https://medayork.pages.dev/img/og.jpg">
+<link rel="icon" type="image/png" href="img/icono-48.png">
+<link rel="apple-touch-icon" href="img/icono-180.png">
+<script>document.documentElement.className='js'</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Las letras cargan sin frenar la primera pantalla (media="print" y luego se activan) -->
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet"></noscript>
+<link rel="stylesheet" href="css/estilos.css?v=20261116c">
+</head>
+<body>
+<nav class="nav" aria-label="Principal"><div class="wrap">
+  <a class="logo" href="index.html" aria-label="Medayork, inicio"><img src="img/estatua-claro.png" alt="" width="89" height="120"><b>MEDAYORK</b></a>
+  <a class="btn solid" data-wa="general" data-b="nav" href="https://wa.me/573226759950">Pedir</a>
+</div></nav>
+
+<main class="seg pagina" id="seguimiento">
+  <div class="wrap">
+    <div class="mono" style="color:#E3E7E9">[ Llegadas · JFK → MDE ]</div>
+    <h1 class="disp">Sigue tu encargo</h1>
+    <div class="guia">
+      <div class="gcab mono"><span id="g-codigo">Guía de encargo</span><span>JFK → MDE</span></div>
+      <form class="busca" id="busca" action="seguimiento.html" method="get">
+        <label class="salto" for="codigo">Código de tu encargo</label>
+        <input id="codigo" name="codigo" placeholder="MY-0000" autocomplete="off" required>
+        <button class="btn solid" type="submit">Ver estado →</button>
+      </form>
+      <p id="aviso" style="margin-top:16px;color:var(--gris-texto)" role="status">Escribe el código que te dimos al hacer tu encargo.</p>
+      <noscript><p style="margin-top:10px">Tu navegador tiene JavaScript apagado. Escríbenos por WhatsApp con tu código y te contamos cómo va.</p></noscript>
+
+      <!-- Tablero de aeropuerto: las letras giran hasta mostrar el estado -->
+      <div class="tablero" id="tablero" hidden>
+        <div class="mono"><span>Estado</span><span id="t-fecha"></span></div>
+        <div id="t-filas" aria-hidden="true"></div>
+        <p class="salto" id="t-texto"></p>
+      </div>
+      <ol class="linea" id="linea" hidden></ol>
+      <div class="barras" style="margin-top:10px" aria-hidden="true"></div>
+    </div>
+    <p style="margin-top:22px;color:#E3E7E9">¿No tienes tu código o tienes dudas? <a id="wa2" data-b="seguimiento" href="https://wa.me/573226759950" style="text-decoration:underline;color:var(--hueso)" target="_blank" rel="noopener">Escríbenos por WhatsApp</a>.</p>
+  </div>
+</main>
+
+<footer class="pie-p" style="padding-bottom:30px"><div class="wrap mono">
+  <div><a href="index.html">Volver a la tienda</a><a href="condiciones.html">Condiciones de encargo</a><a href="privacidad.html">Política de datos</a></div>
+  <span>@meda_yorkshop · Medellín, Colombia</span>
+</div></footer>
+
+<script src="datos/conexion.js?v=20261116c"></script>
+<script src="datos/respaldo.js?v=20261116c"></script>
+<script src="js/datos.js?v=20261116c"></script>
+<script>
+/* Seguimiento: pregunta a la hoja por un código y muestra SOLO estado, fecha y nota. */
+(function(){
+  var MY=window.MY, $=function(s){return document.querySelector(s)};
+  // Deben ser exactamente los mismos estados que la lista desplegable de la hoja (pestaña Encargos).
+  var ESTADOS=['Recibido','Separado','Comprado en Nueva York','En camino','En Medellín','Entregado'];
+  var ROTULO={'Separado':'Separado · primer abono'};
+  var aviso=$('#aviso'), linea=$('#linea'), entrada=$('#codigo'), tablero=$('#tablero');
+  function norm(c){c=String(c||'').toUpperCase().replace(/\s/g,'');var m=c.match(/^([A-Z]{2})-?(\d{3,5})$/);return m?m[1]+'-'+m[2]:''}
+
+  /* Tablero split-flap: reparte el texto en renglones de 12 casillas y hace girar cada letra. */
+  var ANCHO=12, LETRAS='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+  function renglones(t){
+    var r=[],a='';
+    t.toUpperCase().split(' ').forEach(function(p){
+      if((a+' '+p).trim().length>ANCHO){r.push(a);a=p}else a=(a+' '+p).trim();
+    });
+    if(a)r.push(a);return r;
+  }
+  function pintaTablero(texto){
+    var cont=$('#t-filas');cont.innerHTML='';$('#t-texto').textContent=texto;
+    renglones(texto).forEach(function(ren,f){
+      var fila=document.createElement('div');fila.className='fila-t';
+      for(var i=0;i<ANCHO;i++){
+        (function(letra,orden){
+          var c=document.createElement('span');c.className='celda';fila.appendChild(c);
+          if(MY.quieto||letra===' '){c.textContent=letra;return}
+          var vueltas=5+orden, n=0;
+          var t=setInterval(function(){
+            n++;c.classList.remove('gira');void c.offsetWidth;c.classList.add('gira');
+            c.textContent=n>=vueltas?letra:LETRAS.charAt(Math.floor(Math.random()*LETRAS.length));
+            if(n>=vueltas)clearInterval(t);
+          },55);
+        })(ren.charAt(i)||' ',f*4+i);
+      }
+      cont.appendChild(fila);
+    });
+    tablero.hidden=false;
+  }
+
+  function pinta(d,codigo){
+    var i=ESTADOS.map(function(e){return e.toLowerCase()}).indexOf(String(d.estado||'').toLowerCase().trim());
+    if(i<0){aviso.textContent='Tu encargo '+codigo+' está registrado. Escríbenos por WhatsApp para darte el detalle.';return}
+    $('#g-codigo').textContent='Guía '+codigo;
+    aviso.textContent='';
+    var f=d.fecha?new Date(d.fecha):null;
+    $('#t-fecha').textContent=f&&!isNaN(f)?'Pedido el '+f.toLocaleDateString('es-CO',{day:'numeric',month:'short'}):'';
+    pintaTablero(ESTADOS[i]);
+    linea.innerHTML=ESTADOS.map(function(e,k){
+      var r=ROTULO[e]||e;
+      if(k<i)return '<li class="ok">'+r+'</li>';
+      if(k===i)return '<li class="ya"><b>'+r+'</b>'+(d.nota?'<span class="nt">'+MY.esc(d.nota)+'</span>':'')+'<span class="sello anim in">Original</span></li>';
+      return '<li>'+r+'</li>';
+    }).join('');
+    linea.hidden=false;
+  }
+  function consulta(codigo){
+    aviso.textContent='Buscando '+codigo+'…'; linea.hidden=true; tablero.hidden=true;
+    $('#wa2').href=MY.wa(MY.msj.seguimiento(codigo));
+    if(!MY.script){aviso.textContent='El seguimiento en línea se está activando. Mientras tanto, escríbenos por WhatsApp con tu código '+codigo+'.';return}
+    fetch(MY.script+'?codigo='+encodeURIComponent(codigo)).then(function(r){return r.json()}).then(function(d){
+      if(d&&d.ok)pinta(d,codigo);else aviso.textContent='No encontramos el código '+codigo+'. Revísalo o escríbenos por WhatsApp.';
+    }).catch(function(){aviso.textContent='No pudimos consultar en este momento. Intenta de nuevo o escríbenos por WhatsApp.'});
+  }
+
+  MY.cargar(function(){MY.enlaces();$('#wa2').href=MY.wa(MY.msj.seguimiento(norm(entrada.value)))});
+  var c=norm(new URLSearchParams(location.search).get('codigo'));
+  if(c){entrada.value=c;consulta(c)}
+  else if(location.search.indexOf('codigo=')>-1)aviso.textContent='Ese código no tiene el formato correcto. Debe verse así: MY-1001.';
+  $('#busca').addEventListener('submit',function(e){
+    e.preventDefault();var k=norm(entrada.value);
+    if(!k){aviso.textContent='El código debe verse así: MY-1001.';return}
+    try{history.replaceState(null,'','?codigo='+k)}catch(err){}
+    consulta(k);
+  });
+})();
+</script>
+</body>
+</html>
