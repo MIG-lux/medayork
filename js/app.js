@@ -72,7 +72,7 @@
       '<a class="btn solid" data-b="producto" data-ref="' + esc(p.ref) + '" target="_blank" rel="noopener" href="' + esc(MY.wa(MY.msj.producto(p))) + '">' + textoBoton(p) + ' →</a>' +
       '</div></article>';
   }
-  var filtros = {}, POR_TANDA = 12;                               // en celular se muestran 12 y luego "Ver más"
+  var filtros = {}, POR_TANDA = 16;                               // se muestran 16 y luego "Ver más"
   function pintaCatalogo() {
     $$('[data-seccion]').forEach(function (sec) {
       var nombre = sec.getAttribute('data-seccion');

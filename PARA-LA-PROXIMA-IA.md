@@ -137,7 +137,7 @@ Antes de entregar cualquier cambio:
 ## 7. Qué no se probó o quedó a medias
 
 - El Apps Script **no se ha ejecutado en Google**: solo contra `servidor-prueba.py`, que replica su lógica. Falta la prueba real de encargo → hoja → correo → seguimiento, y de `prepararHoja()`.
-- No está publicado ni en GitHub. `og:image`, `og:url` y `canonical` apuntan a `https://medayork.pages.dev`, que es un nombre **supuesto**: corrígelo si el link real es otro.
+- No está publicado ni en GitHub. `og:image`, `og:url` y `canonical` apuntan a `https://medayork.medayorkshop.workers.dev`, que es un nombre **supuesto**: corrígelo si el link real es otro.
 - Las fotos de producto actuales son de prueba (renders), no de la prenda real.
 - `condiciones.html` tiene 7 marcadores por definir; MY-0101 no tiene marca.
 - Las respuestas de preguntas frecuentes, la lista de "En hype" y la guía de tallas las redactó la IA y esperan confirmación del dueño.

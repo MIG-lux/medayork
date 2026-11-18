@@ -32,14 +32,14 @@ No necesitas instalar nada.
 3. En la página que sale, clic en **uploading an existing file**. Abre esta carpeta (`C:\Pagina web`) y arrastra a la ventana **todo menos**: la carpeta `Recursos`, la carpeta `.claude`, `direccion-de-arte.html` y el archivo `.zip`. Abajo, clic en **Commit changes**.
 4. Crea una cuenta en **cloudflare.com**. Ve a **Workers & Pages → Crear → Pages → Conectar con Git**, autoriza GitHub y elige `medayork`.
 5. Nombre del proyecto: `medayork`. Comando de compilación: vacío. Directorio de salida: `/`. Clic en **Guardar e implementar**.
-6. En un minuto te da tu link, algo como `https://medayork.pages.dev`.
-7. **Si el link NO es exactamente `medayork.pages.dev`** (porque el nombre ya estaba ocupado): avísale a tu IA o cambia tú mismo ese texto por tu link real en `index.html`, `seguimiento.html`, `llegadas.html` y `condiciones.html` (búscalo con Ctrl + F). Sirve para que el link se vea con foto al mandarlo por WhatsApp.
+6. En un minuto te da tu link, algo como `https://medayork.medayorkshop.workers.dev`.
+7. **Si el link NO es exactamente `medayork.medayorkshop.workers.dev`** (porque el nombre ya estaba ocupado): avísale a tu IA o cambia tú mismo ese texto por tu link real en `index.html`, `seguimiento.html`, `llegadas.html` y `condiciones.html` (búscalo con Ctrl + F). Sirve para que el link se vea con foto al mandarlo por WhatsApp.
 8. **Medir visitas:** en Cloudflare, dentro de tu proyecto → **Métricas → Web Analytics → Habilitar**. Es un clic y no hay que pegar ningún código. (Si algún día Cloudflare te da un "token", se pega en `datos/conexion.js`, en `analytics_token`.)
 
 Links para tu bio, para saber de qué red llega cada pedido:
 
-- Instagram: `https://medayork.pages.dev/?origen=instagram`
-- TikTok: `https://medayork.pages.dev/?origen=tiktok`
+- Instagram: `https://medayork.medayorkshop.workers.dev/?origen=instagram`
+- TikTok: `https://medayork.medayorkshop.workers.dev/?origen=tiktok`
 
 El mensaje de WhatsApp del cliente terminará con "(Vengo de Instagram)" y queda anotado en la hoja.
 
@@ -72,6 +72,10 @@ Los cambios en la hoja se ven en la página al recargarla. No hay que publicar n
 1. Prepara la foto: vertical, **800 × 1000 píxeles**, fondo gris azulado para hombre y arcilla claro para mujer. Para que pese poco, ábrela en **squoosh.app**, elige formato WebP, y descárgala. Nómbrala igual que la referencia, en minúsculas y sin espacios: `my-0109.webp`.
 2. En GitHub entra a tu repositorio → carpeta `img` → `productos` → **Add file → Upload files** → arrastra la foto → **Commit changes**.
 3. En uno o dos minutos ya está publicada. Escribe ese mismo nombre en la columna `fotos` de la hoja.
+
+### Cambiar el orden de las prendas
+
+La página muestra las prendas en el mismo orden de las filas de la pestaña `Catalogo`. Para que una salga de primera, mueve su fila hacia arriba (clic en el número de la fila y arrástrala). Cada sección muestra 16 y luego el botón "Ver más".
 
 ### Quitar un producto o marcarlo agotado
 
