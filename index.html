@@ -25,7 +25,7 @@
 <!-- Las letras cargan sin frenar la primera pantalla (media="print" y luego se activan) -->
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="css/estilos.css?v=20261116c">
+<link rel="stylesheet" href="css/estilos.css?v=20261117">
 <link rel="preload" as="image" href="img/portada-v.webp" media="(max-width:759px)">
 <link rel="preload" as="image" href="img/portada-h.webp" media="(min-width:760px)">
 <script type="application/ld+json">
@@ -35,7 +35,7 @@
 <body>
 <a class="salto mono" href="#catalogo">Ir al catálogo</a>
 
-<a class="cinta mono" id="cinta" href="#black-friday" hidden><b>Black Friday Medayork</b> · rebajas en stock de Medellín · entrega inmediata →</a>
+<a class="cinta mono" id="cinta" href="#black-friday" hidden><b>Black Friday Medayork</b> · rebajas en lo que ya está en Medellín →</a>
 
 <nav class="nav" aria-label="Principal"><div class="wrap">
   <a class="logo" href="#portada" aria-label="Medayork, inicio"><img src="img/estatua-claro.png" alt="" width="89" height="120"><b>MEDAYORK</b></a>
@@ -52,7 +52,6 @@
   </picture>
   <video class="medio" id="video" muted loop playsinline preload="none" aria-hidden="true" hidden></video>
   <div class="velo"></div>
-  <span class="sello anim in">Original</span>
   <div class="portada-in"><div class="wrap">
     <div class="mono" style="color:#D6DCDE">[ MDE ⇄ JFK ]</div>
     <h1 class="disp" id="frase">Lo original viaja con nosotros.</h1>
@@ -88,22 +87,23 @@
 <section class="bf" id="black-friday" hidden>
   <div class="fantasma" aria-hidden="true" data-t="Black Friday"></div>
   <div class="wrap">
-    <span class="sello bf anim">Black Friday<small>Medellín · entrega inmediata</small></span>
+    <div class="mono" style="color:var(--niebla);margin-bottom:16px">[ Filadelfia · donde nació el Black Friday ]</div>
+    <span class="sello bf anim">Black Friday<small>MDE ⇄ JFK</small></span>
     <div id="bf-abierto">
       <h2 class="disp">Black Friday <em>Medayork</em></h2>
       <div class="ser" style="font-size:26px;color:var(--arcilla)">Lo que ya está en Medellín, a precio de temporada.</div>
       <ol class="bf-pasos">
-        <li>Eliges entre lo que tenemos en stock en Medellín.</li>
-        <li>Nos escribes por WhatsApp y lo separas antes del cierre.</li>
-        <li>Te lo entregamos de inmediato en Medellín.</li>
+        <li>Elige lo que te gusta.</li>
+        <li>Escríbenos por WhatsApp.</li>
+        <li>Te llevamos tu pedido.</li>
       </ol>
       <div class="mono" style="color:var(--arcilla)">Cierra el <span id="bf-fecha"></span> · faltan</div>
       <div class="cuenta mono" id="cuenta" role="timer" aria-live="off">
         <div><b id="c-d">–</b>días</div><div><b id="c-h">–</b>horas</div><div><b id="c-m">–</b>min</div><div><b id="c-s">–</b>seg</div>
       </div>
-      <div class="fila">
-        <a class="btn solid" href="#hombre">Ver Hombre →</a>
-        <a class="btn solid" href="#mujer">Ver Mujer →</a>
+      <div class="puertas">
+        <a class="puerta h" href="#hombre"><span class="mono">Ir a →</span><b>Hombre</b></a>
+        <a class="puerta m" href="#mujer"><span class="mono">Ir a →</span><b>Mujer</b></a>
       </div>
       <p class="mono nota">Unidades y tallas limitadas a lo que hay en stock.</p>
     </div>
@@ -118,11 +118,11 @@
   <div class="wrap">
     <div class="cab">
       <div>
-        <div class="mono">[ Sección 01 · Hudson ]</div>
+        <div class="mono">[ SoHo · Nueva York ]</div>
         <h2 class="disp">Hombre</h2>
         <div class="chips" data-filtros></div>
       </div>
-      <p class="lado mono">Lo que está en stock se entrega ya en Medellín. Lo demás lo traemos bajo encargo.</p>
+      <p class="lado mono">Lo que ves ya está en Medellín. Lo que no encuentres, te lo traemos bajo encargo.</p>
     </div>
     <div class="rejilla" data-rejilla></div>
   </div>
@@ -132,7 +132,7 @@
   <div class="wrap">
     <div class="cab">
       <div>
-        <div class="mono">[ Sección 02 · Arcilla ]</div>
+        <div class="mono">[ Brooklyn · Nueva York ]</div>
         <h2 class="disp">Mujer <span class="ser">la misma ruta, otro ritmo</span></h2>
         <div class="chips" data-filtros></div>
       </div>
@@ -146,7 +146,7 @@
   <div class="wrap">
     <div class="cab">
       <div>
-        <div class="mono" style="color:var(--arcilla)">[ Sección 03 · Radar ]</div>
+        <div class="mono" style="color:var(--arcilla)">[ Times Square ]</div>
         <h2 class="disp">En <em>hype</em></h2>
       </div>
       <p class="lado mono">Lo que más se está pidiendo. Marca el que tú también quieres: lo más votado es lo próximo que traemos.</p>
@@ -192,7 +192,7 @@
   <div class="wrap">
     <div class="cab">
       <div>
-        <div class="mono" style="color:var(--hudson-d)">[ Sección 04 · La ruta ]</div>
+        <div class="mono" style="color:var(--hudson-d)">[ JFK → MDE ]</div>
         <h2 class="disp">Cómo funciona</h2>
       </div>
       <p class="lado mono" style="color:var(--hudson-d)">Tú eliges, nosotros lo traemos de Nueva York y te llega a Medellín.</p>
@@ -200,7 +200,7 @@
     <div class="pasos">
       <div class="paso sube"><div class="k">01</div><div class="mono">Elige</div><h3>Eliges o pides</h3><p>Escoge del catálogo o pídenos lo que buscas. Te damos un solo precio: el final, ya puesto en Medellín.</p></div>
       <div class="paso sube"><div class="k">02</div><div class="mono">Abono 1 de 2</div><h3>Separas con el 50 %</h3><p>Con la mitad apartamos tu prenda o hacemos tu encargo.</p></div>
-      <div class="paso sube"><div class="k">03</div><div class="mono">15 a 20 días</div><h3>Viaja a Medellín</h3><p>Si es por encargo, lo traemos desde Nueva York y te avisamos por WhatsApp. Si está en stock, se entrega de inmediato.</p></div>
+      <div class="paso sube"><div class="k">03</div><div class="mono">15 a 20 días</div><h3>Viaja a Medellín</h3><p>Si es por encargo, lo traemos desde Nueva York y te avisamos por WhatsApp. Si ya está en Medellín, te lo llevamos.</p></div>
       <div class="paso sube"><div class="k">04</div><div class="mono">Abono 2 de 2</div><h3>Lo recibes</h3><p>Pagas el otro 50 % cuando lo recibes en Medellín.</p></div>
     </div>
   </div>
@@ -210,7 +210,7 @@
   <div class="wrap">
     <div class="cab">
       <div>
-        <div class="mono" style="color:#E3E7E9">[ Sección 05 · Guía ]</div>
+        <div class="mono" style="color:#E3E7E9">[ Terminal 4 · JFK ]</div>
         <h2 class="disp">Sigue tu encargo</h2>
       </div>
       <p class="lado mono">Escribe el código que te dimos y mira por dónde va.</p>
@@ -231,7 +231,7 @@
   <div class="wrap">
     <div class="cab">
       <div>
-        <div class="mono" style="color:var(--hudson-d)">[ Sección 06 · Medidas ]</div>
+        <div class="mono" style="color:var(--hudson-d)">[ Quinta Avenida ]</div>
         <h2 class="disp">Guía de tallas</h2>
       </div>
       <p class="lado mono" style="color:var(--hudson-d)">Todo viene en talla de Estados Unidos (US). Mide tu pie en centímetros y compara.</p>
@@ -255,7 +255,7 @@
 <section class="faq" id="preguntas">
   <div class="wrap">
     <div class="cab"><div>
-      <div class="mono" style="color:var(--hudson-d)">[ Sección 07 · Dudas ]</div>
+      <div class="mono" style="color:var(--hudson-d)">[ Grand Central ]</div>
       <h2 class="disp">Preguntas frecuentes</h2>
     </div></div>
     <details><summary>¿Cómo sé que es original?</summary><p>Todo lo que vendemos lo compramos nosotros mismos en Nueva York y lo traemos a Medellín. No manejamos réplicas ni "triple A". Si quieres, antes de pagar te mostramos la prenda en detalle por WhatsApp: etiquetas, costuras y empaque.</p></details>
@@ -263,7 +263,7 @@
     <details><summary>¿Cómo funcionan los 2 abonos?</summary><p>Pagas el 50 % para separar tu prenda o hacer tu encargo, y el otro 50 % cuando la recibes. Todo se coordina por WhatsApp.</p></details>
     <details><summary>¿Qué pasa si no hay mi talla?</summary><p>Si no está en stock, la buscamos en Nueva York y te la traemos por encargo: tarda de 15 a 20 días y la separas con el 50 %. Si no la conseguimos, te avisamos antes de recibir cualquier pago.</p></details>
     <details><summary>¿Hacen envíos fuera de Medellín?</summary><p>Por ahora solo entregamos en Medellín.</p></details>
-    <details id="faq-bf" hidden><summary>¿Cómo funciona el Black Friday?</summary><p>Son rebajas sobre lo que ya tenemos en stock en Medellín, con entrega inmediata. Va hasta la fecha de cierre o hasta que se agoten las unidades.</p></details>
+    <details id="faq-bf" hidden><summary>¿Cómo funciona el Black Friday?</summary><p>Son rebajas sobre lo que ya tenemos en stock en Medellín. Va hasta la fecha de cierre o hasta que se agoten las unidades.</p></details>
   </div>
 </section>
 
@@ -313,9 +313,9 @@
 <div class="barra fuera" id="barra"><a class="btn solid" data-wa="barra" href="https://wa.me/573226759950">Pedir por WhatsApp →</a></div>
 
 <!-- Orden obligatorio: conexión → respaldo → datos compartidos → página -->
-<script src="datos/conexion.js?v=20261116c" defer></script>
-<script src="datos/respaldo.js?v=20261116c" defer></script>
-<script src="js/datos.js?v=20261116c" defer></script>
-<script src="js/app.js?v=20261116c" defer></script>
+<script src="datos/conexion.js?v=20261117" defer></script>
+<script src="datos/respaldo.js?v=20261117" defer></script>
+<script src="js/datos.js?v=20261117" defer></script>
+<script src="js/app.js?v=20261117" defer></script>
 </body>
 </html>

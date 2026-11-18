@@ -22,6 +22,12 @@
   MY.lee = function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } };
   MY.guarda = function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} };
   MY.foto = function (archivo) { return 'img/productos/' + encodeURIComponent(String(archivo).trim()); };
+  // Morrales, gorras y accesorios son talla única. En ropa, si la hoja no trae tallas, se le pide al cliente que pregunte.
+  MY.unica = function (p) { return ['morrales', 'gorras', 'accesorios'].indexOf(p.categoria) > -1; };
+  MY.textoTallas = function (p) {
+    if (p.tallas && p.tallas.length) return p.tallas.join(' · ');
+    return MY.unica(p) ? 'Única' : 'Pregúntanos';
+  };
 
   /* ---------- 1. Carga del contenido ---------- */
   function valido(d) { return d && d.config && Array.isArray(d.productos) && d.productos.length > 0; }
@@ -61,7 +67,7 @@
       return '<span class="antes"><span class="salto">Antes </span>' + MY.pesos(p.precio) + '</span>' + MY.pesos(p.precio_bf);
     }
     var n = MY.enBF(p) && p.precio_bf ? p.precio_bf : p.precio;
-    return n ? MY.pesos(n) : 'Pregunta el precio';
+    return n ? MY.pesos(n) : '<span class="sinprecio">Pregunta el precio</span>';
   };
 
   /* ---------- 3. WhatsApp y origen ---------- */
@@ -86,7 +92,7 @@
     general: function () { return 'Hola Medayork, vengo de la web y quiero hacer un pedido.'; },
     tallas: function () { return 'Hola Medayork, tengo una duda con la talla de una prenda.'; },
     producto: function (p, talla) {
-      var t = talla || (p.tallas && p.tallas.length === 1 ? p.tallas[0] : (p.tallas && p.tallas.length ? '__' : ''));
+      var t = talla || (p.tallas && p.tallas.length === 1 ? p.tallas[0] : (MY.unica(p) ? '' : '__'));
       var cola = ' (Ref. ' + p.ref + ')' + (t ? ', talla ' + t : '');
       if (MY.enBF(p)) return 'Hola Medayork, quiero del Black Friday: ' + MY.nombreLargo(p) + cola + '.';
       if (p.estado === 'stock') return 'Hola Medayork, quiero ' + MY.nombreLargo(p) + cola + '. ¿Está disponible?';

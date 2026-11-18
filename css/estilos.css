@@ -132,6 +132,14 @@ section{padding:var(--sec) 0}
 .cuenta b{display:block;font-family:var(--disp);font-weight:900;font-size:38px;line-height:1}
 .bf .fila{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
 .bf .nota{color:var(--niebla);margin-top:14px}
+/* Las dos "puertas" grandes del Black Friday: Hombre (ladrillo) y Mujer (arcilla) */
+.puertas{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:24px;max-width:640px}
+.puerta{position:relative;display:flex;flex-direction:column;justify-content:flex-end;min-height:108px;padding:14px 16px;clip-path:polygon(0 0,88% 0,100% 18%,100% 100%,0 100%);transition:transform .18s,filter .18s}
+.puerta.h{background:var(--ladrillo-btn);color:var(--hueso)}
+.puerta.m{background:var(--arcilla);color:var(--cafe)}
+.puerta .mono{font-size:12px;margin-bottom:4px}
+.puerta b{font-family:var(--disp);font-weight:900;text-transform:uppercase;font-size:clamp(34px,9vw,52px);line-height:.9}
+.puerta:hover{transform:translateY(-3px);filter:brightness(1.06)}
 
 /* catálogo */
 .hombre{background:var(--hueso)}
@@ -148,6 +156,7 @@ section{padding:var(--sec) 0}
 .mujer .estado{background:var(--ladrillo-btn)}
 .dato{display:flex;justify-content:space-between;align-items:baseline;gap:8px;border-top:1px dashed currentColor;padding-top:7px;margin-top:7px;flex-wrap:wrap}
 .precio{font-family:var(--mono);font-weight:500;font-size:16px;letter-spacing:0;white-space:nowrap}
+.sinprecio{font-size:11px;font-weight:500;letter-spacing:.08em;text-transform:uppercase;white-space:normal;text-align:right}
 .antes{text-decoration:line-through;opacity:.7;margin-right:8px;font-size:12px}
 .card .btn{width:100%;margin-top:auto;padding:12px 8px;font-size:12px;letter-spacing:.08em}
 .card .pie{margin-top:12px;display:flex;flex-direction:column;flex:1}
@@ -263,6 +272,8 @@ th{font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
 .card h3 a:hover,.rank h3 a:hover{text-decoration:underline}
 .card.agotado .foto img{filter:grayscale(.85);opacity:.6}
 .card.agotado .estado{background:var(--asfalto);color:var(--hueso)}
+.mas{grid-column:1/-1;text-align:center;padding-top:6px}
+.mas .btn{min-width:240px}
 .trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
 /* Sin JavaScript: se esconden las partes que dependen de él (catálogo, formulario) y queda el aviso con WhatsApp */
 .no-js [data-seccion],.no-js .hype,.no-js .flechas,.no-js .seg .busca{display:none}
@@ -368,6 +379,6 @@ th{font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
   .js .portada picture img,.ticker div{animation:none}
   .js .sello.anim,.js .in .sello.anim,.js .sello.anim.in{opacity:1;animation:none}
   .js .sube{opacity:1;transform:none;transition:none}
-  .btn,.barra{transition:none}
+  .btn,.barra,.puerta{transition:none}
   .celda.gira{animation:none}
 }

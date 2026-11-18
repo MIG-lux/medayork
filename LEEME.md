@@ -56,8 +56,8 @@ Los cambios en la hoja se ven en la página al recargarla. No hay que publicar n
    - `ref`: código único, con este formato: `MY-0109`. Hombre 01xx, Mujer 02xx, En hype 03xx.
    - `nombre`, `marca`, `color`: como quieres que se lean.
    - `seccion`: `hombre`, `mujer` o `hype` (los de `hype` solo salen en el ranking "En hype", sin foto ni precio).
-   - `categoria`: elige de la lista.
-   - `tallas`: separadas por coma: `8, 9, 10`. Vacío = talla única.
+   - `categoria`: elige de la lista (camisetas, polos, buzos, hoodies, chaquetas, pantalones, pantalonetas, shorts, tops, sandalias, morrales, gorras…).
+   - `tallas`: separadas por coma: `8, 9, 10`. Si la dejas vacía, la tarjeta dice "Pregúntanos" en ropa y "Única" en morrales, gorras y accesorios.
    - `precio`: solo números, sin puntos: `180000`. Vacío = "Pregunta el precio".
    - `precio_bf` y `bf`: ver Black Friday abajo.
    - `estado`: `stock`, `encargo` o `agotado`.
@@ -181,8 +181,8 @@ En GitHub, entra al archivo → ícono del lápiz → cambia → **Commit change
 1. **Crear la hoja y pegar la dirección** en `datos/conexion.js` (Parte 1).
 2. **Publicar** en GitHub y Cloudflare (Parte 2) y confirmar el link.
 3. **Probar con la hoja real:** haz un encargo de prueba, revisa que llegue a la hoja y al correo, y que el código funcione en "Sigue tu encargo". Yo lo probé contra una hoja simulada, no contra Google.
-4. **Marca de la camiseta estampada MY-0101** (sale un marcador amarillo).
-5. **Fotos reales** de cada prenda (las actuales son de prueba) y **el resto del stock** (hay 11 de unos 50).
+4. ~~Tallas y precios de las prendas nuevas~~ (hecho el 17-nov-2026: 80 prendas con talla y precio). Cuando cambie el inventario, se cambia en la hoja.
+5. **Cambiar el link** para que no muestre tu correo (Cloudflare → Workers & Pages → Subdominio → Cambiar) y pasárselo a tu IA para corregir la imagen al compartir. En `catalogo-numerado` está `catalogo.csv` (se abre con Excel) con el número de cada foto, su Ref., talla y precio.
 6. **Llenar `condiciones.html`** (7 marcadores).
 7. **Confirmar lo que redacté o deduje:** respuestas de preguntas frecuentes, lista de "En hype", que los precios actuales son los de Black Friday, hombre/mujer de cada producto y la guía de tallas.
 8. **QR para las bolsas:** se genera con el link final. Pídeselo a cualquier IA: "hazme un QR de este link en color #1C1D1F sobre fondo #EFECE6, en SVG y PNG de 2048 px".

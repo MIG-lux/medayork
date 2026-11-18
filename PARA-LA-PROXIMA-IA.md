@@ -18,6 +18,7 @@ Sitio estático (HTML + CSS + JS sin librerías ni paso de compilación) en Clou
 - Envíos fuera de Medellín (hoy no se hacen).
 
 **Siempre:**
+- **Sin "entrega inmediata" ni fechas de entrega para lo que está en stock:** la entrega se cuadra por WhatsApp.
 - **Un solo precio:** el final, puesto en Medellín. Precio tachado solo si `precio_bf < precio` y `precio` es lo que realmente se cobraba.
 - **Nada inventado:** ni precios, tallas, stock, votos, contadores, testimonios, tiempos ni políticas. Lo que falte va como marcador amarillo `<span class="mk">[TEXTO]</span>` y se anota en Pendientes del LEEME.
 - **Sin urgencia falsa:** la cuenta regresiva solo apunta a una fecha real de la hoja; nada de "quedan 2" ni "X personas viendo".
@@ -45,13 +46,15 @@ Lenguaje de encomienda y aeropuerto: sello tipo aduana, códigos `MDE ⇄ JFK` /
 | `--cafe` | #3A1C12 | Texto sobre arcilla |
 | `--marcador` | #FFE45C | Marcadores de dato pendiente y foco de teclado |
 
-Hombre = Hudson/niebla. Mujer = arcilla/café, mismo sistema con otra temperatura. Black Friday = asfalto con detalles ladrillo y sello doble.
+Tallas vacías: `MY.textoTallas()` muestra "Pregúntanos" en ropa y "Única" en morrales/gorras/accesorios. Catálogo: 12 por sección y botón "Ver más". Fotos de producto: recorte 4:5 que contiene la prenda completa (relleno repitiendo el borde del fondo). Hombre = Hudson/niebla. Mujer = arcilla/café, mismo sistema con otra temperatura. Black Friday = asfalto con detalles ladrillo y sello doble.
 
 **Letras** (Google Fonts, `display=swap`, cargadas sin bloquear con `media="print" onload`):
 - `--disp` Big Shoulders Display 900: títulos, en mayúsculas, interlineado ~0.9 (subir a ~1.05 si el texto tiene tildes y ocupa dos líneas).
 - `--mono` IBM Plex Mono 400/500: datos de etiqueta, botones, microtextos. 11 a 13 px, mayúsculas, tracking amplio.
 - `--ser` Instrument Serif cursiva: solo "Original style." y frases emocionales cortas.
 - `--sans` Inter 400/500: párrafos.
+
+**Microtextos de sección:** lugares reales de Nueva York entre corchetes (`[ SoHo · Nueva York ]`, `[ Brooklyn · Nueva York ]`, `[ Times Square ]`, `[ Terminal 4 · JFK ]`, `[ Quinta Avenida ]`, `[ Grand Central ]`, Black Friday `[ Filadelfia · donde nació el Black Friday ]`). Nada de "Sección 01" ni nombres de colores. La portada no lleva sello encima del video.
 
 **Sello ORIGINAL** (`.sello`): borde ladrillo 2 px, radio 6 px, mono, tracking .18em, rotado −10°, fondo hueso al 94 %. Variante `.sello.bf` (asfalto, borde doble, texto arcilla).
 
@@ -115,7 +118,7 @@ Orden de scripts obligatorio: `conexion.js` → `respaldo.js` → `datos.js` →
 
 **Ficha de producto:** `<dialog id="ficha">`. Se abre por hash `#MY-0101` (`hashchange`), que es también el enlace directo para compartir. Al cerrar se limpia el hash con `history.replaceState`.
 
-**Black Friday:** `MY.estadoBF()` → `abierto | cerrado | apagado`. `MY.enBF(p)` exige BF abierto, `p.bf` y `estado === 'stock'`. Es una rebaja del stock de Medellín con entrega inmediata, no una temporada de encargos.
+**Black Friday:** `MY.estadoBF()` → `abierto | cerrado | apagado`. `MY.enBF(p)` exige BF abierto, `p.bf` y `estado === 'stock'`. Es una rebaja del stock de Medellín, no una temporada de encargos. **No prometer "entrega inmediata"** (el dueño lo pidió el 17-nov-2026): los pasos son "Elige lo que te gusta · Escríbenos por WhatsApp · Te llevamos tu pedido".
 
 ## 6. Cómo probar
 

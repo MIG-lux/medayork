@@ -49,14 +49,14 @@
   /* ---------- 2. Tarjetas y catálogo ---------- */
   function textoEstado(p) {
     if (p.estado === 'agotado') return 'Agotado · pídelo por encargo';
-    if (p.estado === 'stock') return MY.enBF(p) ? 'Entrega inmediata' : 'En stock';
+    if (p.estado === 'stock') return 'En stock';
     return 'Bajo encargo';
   }
   function textoBoton(p) { return MY.enBF(p) ? 'Pedir en Black Friday' : (p.estado === 'stock' ? 'Pedir' : 'Pedir encargo'); }
   function altFoto(p) { return esc(p.nombre + (p.marca ? ' ' + p.marca : '') + (p.color ? ', color ' + p.color.toLowerCase() : '')); }
   function tarjeta(p) {
-    var marca = p.marca ? esc(p.marca) : '<span class="mk">[MARCA]</span>';
-    var tallas = p.tallas && p.tallas.length ? esc(p.tallas.join(' · ')) : 'Única';
+    var marca = p.marca ? esc(p.marca) : '&nbsp;';                 // sin marca confirmada no se muestra ninguna
+    var tallas = esc(MY.textoTallas(p));
     return '<article class="card sube' + (yaPintado ? ' in' : '') + (p.estado === 'agotado' ? ' agotado' : '') + '">' +
       '<a class="foto" href="#' + esc(p.ref) + '" aria-label="Ver ' + altFoto(p) + '">' +
       '<img src="' + esc(MY.foto(p.fotos[0])) + '" alt="' + altFoto(p) + '" width="800" height="1000" loading="lazy" decoding="async">' +
@@ -72,12 +72,12 @@
       '<a class="btn solid" data-b="producto" data-ref="' + esc(p.ref) + '" target="_blank" rel="noopener" href="' + esc(MY.wa(MY.msj.producto(p))) + '">' + textoBoton(p) + ' →</a>' +
       '</div></article>';
   }
-  var filtros = {};
+  var filtros = {}, POR_TANDA = 12;                               // en celular se muestran 12 y luego "Ver más"
   function pintaCatalogo() {
     $$('[data-seccion]').forEach(function (sec) {
       var nombre = sec.getAttribute('data-seccion');
       var lista = visibles().filter(function (p) { return p.seccion === nombre && p.fotos && p.fotos.length; });
-      var f = filtros[nombre] || (filtros[nombre] = { cat: 'todo', estado: 'todo' });
+      var f = filtros[nombre] || (filtros[nombre] = { cat: 'todo', estado: 'todo', limite: POR_TANDA });
       var unicos = function (campo) { return lista.map(function (p) { return p[campo]; }).filter(function (c, i, a) { return c && a.indexOf(c) === i; }); };
       var chips = '<button class="chip" data-f="cat" data-v="todo">Todo</button>' +
         unicos('categoria').map(function (c) { return '<button class="chip" data-f="cat" data-v="' + esc(c) + '">' + esc(c) + '</button>'; }).join('');
@@ -86,13 +86,18 @@
       $$('.chip', cont).forEach(function (b) {
         var k = b.getAttribute('data-f'), v = b.getAttribute('data-v');
         b.setAttribute('aria-pressed', f[k] === v ? 'true' : 'false');
-        b.addEventListener('click', function () { f[k] = (k === 'estado' && f[k] === v) ? 'todo' : v; yaPintado = true; pintaCatalogo(); });
+        b.addEventListener('click', function () { f[k] = (k === 'estado' && f[k] === v) ? 'todo' : v; f.limite = POR_TANDA; yaPintado = true; pintaCatalogo(); });
       });
       // "Bajo encargo" incluye lo agotado, porque lo agotado se pide por encargo.
       var ver = lista.filter(function (p) {
         return (f.cat === 'todo' || p.categoria === f.cat) && (f.estado === 'todo' || (f.estado === 'stock' ? p.estado === 'stock' : p.estado !== 'stock'));
       });
-      $('[data-rejilla]', sec).innerHTML = ver.length ? ver.map(tarjeta).join('') : '<p class="vacio">Por ahora no hay productos aquí. Pídenos lo que buscas en "¿Qué quieres que traigamos?".</p>';
+      var faltan = ver.length - f.limite;
+      $('[data-rejilla]', sec).innerHTML = ver.length
+        ? ver.slice(0, f.limite).map(tarjeta).join('') + (faltan > 0 ? '<div class="mas"><button class="btn" type="button" data-mas>Ver más · ' + faltan + ' prendas</button></div>' : '')
+        : '<p class="vacio">Por ahora no hay productos aquí. Pídenos lo que buscas en "¿Qué quieres que traigamos?".</p>';
+      var mas = $('[data-mas]', sec);
+      if (mas) mas.addEventListener('click', function () { f.limite += POR_TANDA; yaPintado = true; pintaCatalogo(); });
     });
     observa();
   }
@@ -169,11 +174,11 @@
     var tallas = p.tallas && p.tallas.length
       ? '<div class="mono" id="t-rot">Elige tu talla</div><div class="tallas-b" role="group" aria-labelledby="t-rot">' + p.tallas.map(function (t) {
           return '<button class="chip" data-talla="' + esc(t) + '" aria-pressed="' + (t === tallaElegida) + '">' + esc(t) + '</button>'; }).join('') + '</div>'
-      : (p.estado === 'stock' ? '<div class="mono">Talla única</div>' : '<div class="mono">Dinos tu talla por WhatsApp</div>');
+      : (MY.unica(p) ? '<div class="mono">Talla única</div>' : '<div class="mono">Pregúntanos las tallas disponibles por WhatsApp</div>');
     $('#ficha-in').innerHTML =
       '<div class="eti-cab mono"><span>' + (p.estado === 'stock' ? 'En Medellín' : 'JFK → MDE') + '</span><span>Ref. ' + esc(p.ref) + '</span></div>' + galeria +
       '<div class="eti-cuerpo">' +
-      '<div class="mono">' + (p.marca ? esc(p.marca) : '<span class="mk">[MARCA]</span>') + (p.color ? ' · ' + esc(p.color) : '') + '</div>' +
+      '<div class="mono">' + [p.marca, p.color].filter(Boolean).map(esc).join(' · ') + '</div>' +
       '<h2 class="disp" id="ficha-t">' + esc(p.nombre) + '</h2>' +
       '<div class="mono"><span class="estado">' + textoEstado(p) + '</span></div>' +
       '<div class="dato mono"><span>' + (MY.enBF(p) ? 'Precio BF' : 'Precio') + '</span><span class="precio">' + MY.precioHTML(p) + '</span></div>' +
