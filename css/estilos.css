@@ -272,6 +272,12 @@ th{font-weight:500;font-size:11px;letter-spacing:.08em;text-transform:uppercase;
 .card h3 a:hover,.rank h3 a:hover{text-decoration:underline}
 .card.agotado .foto img{filter:grayscale(.85);opacity:.6}
 .card.agotado .estado{background:var(--asfalto);color:var(--hueso)}
+/* En hype: tarjetas sobre fondo Hudson oscuro, con botón de voto */
+.hype .estado{background:var(--arcilla);color:var(--asfalto)}
+.hype .chip[aria-pressed="true"]{background:var(--hueso);border-color:var(--hueso);color:var(--asfalto)}
+.card .voto{margin-top:8px}
+.voto[aria-pressed="true"]{background:var(--hueso);color:var(--asfalto);border-color:var(--hueso)}
+.votos{margin-top:10px;color:var(--arcilla)}
 .mas{grid-column:1/-1;text-align:center;padding-top:6px}
 .mas .btn{min-width:240px}
 .trampa{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}

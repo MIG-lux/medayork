@@ -25,6 +25,7 @@
   // Morrales, gorras y accesorios son talla única. En ropa, si la hoja no trae tallas, se le pide al cliente que pregunte.
   MY.unica = function (p) { return ['morrales', 'gorras', 'accesorios'].indexOf(p.categoria) > -1; };
   MY.textoTallas = function (p) {
+    if (p.tallas && p.tallas.length > 5) return p.tallas[0] + ' a ' + p.tallas[p.tallas.length - 1];   // muchas tallas: se resume (la ficha muestra todas)
     if (p.tallas && p.tallas.length) return p.tallas.join(' · ');
     return MY.unica(p) ? 'Única' : 'Pregúntanos';
   };

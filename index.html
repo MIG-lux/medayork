@@ -25,7 +25,7 @@
 <!-- Las letras cargan sin frenar la primera pantalla (media="print" y luego se activan) -->
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="css/estilos.css?v=20261117">
+<link rel="stylesheet" href="css/estilos.css?v=20261120">
 <link rel="preload" as="image" href="img/portada-v.webp" media="(max-width:759px)">
 <link rel="preload" as="image" href="img/portada-h.webp" media="(min-width:760px)">
 <script type="application/ld+json">
@@ -149,10 +149,13 @@
         <div class="mono" style="color:var(--arcilla)">[ Times Square ]</div>
         <h2 class="disp">En <em>hype</em></h2>
       </div>
-      <p class="lado mono">Lo que más se está pidiendo. Marca el que tú también quieres: lo más votado es lo próximo que traemos.</p>
+      <p class="lado mono">Lo más buscado en Nueva York, bajo encargo. Marca el que tú también quieres: lo más votado es lo próximo que traemos.</p>
     </div>
-    <div class="hype-g">
-      <div id="ranking"></div>
+    <div data-seccion="hype">
+      <div class="chips" data-filtros></div>
+      <div class="rejilla" data-rejilla style="margin-top:22px"></div>
+    </div>
+    <div class="hype-g" style="margin-top:56px">
       <div>
         <form class="form" id="encargo" novalidate>
           <div class="mono" style="display:flex;justify-content:space-between;color:var(--hudson-d)"><span>Formulario de encargo</span><span>JFK → MDE</span></div>
@@ -314,8 +317,8 @@
 
 <!-- Orden obligatorio: conexión → respaldo → datos compartidos → página -->
 <script src="datos/conexion.js?v=20261117" defer></script>
-<script src="datos/respaldo.js?v=20261118" defer></script>
-<script src="js/datos.js?v=20261117" defer></script>
-<script src="js/app.js?v=20261118" defer></script>
+<script src="datos/respaldo.js?v=20261120" defer></script>
+<script src="js/datos.js?v=20261120" defer></script>
+<script src="js/app.js?v=20261120" defer></script>
 </body>
 </html>

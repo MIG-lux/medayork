@@ -6,7 +6,7 @@
    1. Black Friday (cinta, sección y cuenta regresiva)
    2. Tarjetas y catálogo con filtros
    3. Carrusel "Llegó y está en hype"
-   4. En hype: ranking, votos y muro
+   4. En hype: tarjetas con voto y muro
    5. Ficha de producto (etiqueta de equipaje) y enlaces directos #MY-0000
    6. Formulario de encargo, protección contra spam y pase de abordar
    7. Movimiento: sello, aparición, video, barra del celular
@@ -55,6 +55,13 @@
   function textoBoton(p) { return MY.enBF(p) ? 'Pedir en Black Friday' : (p.estado === 'stock' ? 'Pedir' : 'Pedir encargo'); }
   function altFoto(p) { return esc(p.nombre + (p.marca ? ' ' + p.marca : '') + (p.color ? ', color ' + p.color.toLowerCase() : '')); }
   function tarjeta(p) {
+    // En hype: botón de voto y, si la hoja trae votos reales, cuántas personas lo quieren
+    var voto = '';
+    if (p.hype) {
+      var ya = MY.lee('voto-' + p.ref) === '1', n = votos[p.ref] || 0;
+      voto = (n ? '<div class="mono votos">' + n + (n === 1 ? ' persona lo quiere' : ' personas lo quieren') + '</div>' : '') +
+        '<button class="btn voto" type="button" data-ref="' + esc(p.ref) + '" aria-pressed="' + ya + '">' + (ya ? 'Anotado ✓' : 'Yo también lo quiero') + '</button>';
+    }
     var marca = p.marca ? esc(p.marca) : '&nbsp;';                 // sin marca confirmada no se muestra ninguna
     var tallas = esc(MY.textoTallas(p));
     return '<article class="card sube' + (yaPintado ? ' in' : '') + (p.estado === 'agotado' ? ' agotado' : '') + '">' +
@@ -69,8 +76,8 @@
       '<div class="dato mono"><span>Ref. ' + esc(p.ref) + '</span><span>' + esc(p.color || '') + '</span></div>' +
       '<div class="dato mono"><span>Talla' + (p.tallas && p.tallas.length > 1 ? 's' : '') + '</span><span>' + tallas + '</span></div>' +
       '<div class="dato mono"><span>' + (MY.enBF(p) ? 'Precio BF' : 'Precio') + '</span><span class="precio">' + MY.precioHTML(p) + '</span></div>' +
-      '<a class="btn solid" data-b="producto" data-ref="' + esc(p.ref) + '" target="_blank" rel="noopener" href="' + esc(MY.wa(MY.msj.producto(p))) + '">' + textoBoton(p) + ' →</a>' +
-      '</div></article>';
+      '<a class="btn solid" data-b="' + (p.hype ? 'hype' : 'producto') + '" data-ref="' + esc(p.ref) + '" target="_blank" rel="noopener" href="' + esc(MY.wa(MY.msj.producto(p))) + '">' + textoBoton(p) + ' →</a>' +
+      voto + '</div></article>';
   }
   var filtros = {}, POR_TANDA = 16;                               // se muestran 16 y luego "Ver más"
   function pintaCatalogo() {
@@ -89,6 +96,8 @@
         b.addEventListener('click', function () { f[k] = (k === 'estado' && f[k] === v) ? 'todo' : v; f.limite = POR_TANDA; yaPintado = true; pintaCatalogo(); });
       });
       // "Bajo encargo" incluye lo agotado, porque lo agotado se pide por encargo.
+      // En hype, si hay votos reales de la hoja, lo más votado va primero
+      if (nombre === 'hype' && Object.keys(votos).length) lista = lista.slice().sort(function (a, b) { return (votos[b.ref] || 0) - (votos[a.ref] || 0); });
       var ver = lista.filter(function (p) {
         return (f.cat === 'todo' || p.categoria === f.cat) && (f.estado === 'todo' || (f.estado === 'stock' ? p.estado === 'stock' : p.estado !== 'stock'));
       });
@@ -104,12 +113,12 @@
 
   /* ---------- 3. Carrusel ---------- */
   function pintaCarrusel() {
-    var lista = visibles().filter(function (p) { return p.fotos && p.fotos.length && (p.nuevo || p.hype) && p.estado !== 'agotado'; });
+    var lista = visibles().filter(function (p) { return p.fotos && p.fotos.length && p.nuevo && p.estado !== 'agotado'; });
     $('#llegadas').hidden = !lista.length;
     $('#carrusel').innerHTML = lista.map(function (p) {
       return '<a class="lleg" href="#' + esc(p.ref) + '">' +
         '<div class="foto"' + (p.seccion === 'mujer' ? ' style="background:var(--arcilla-l)"' : '') + '><img src="' + esc(MY.foto(p.fotos[0])) + '" alt="' + altFoto(p) + '" width="800" height="1000" loading="lazy" decoding="async">' +
-        '<span class="et mono">' + (p.hype ? 'En hype' : 'Recién llegado') + '</span></div>' +
+        '<span class="et mono">Recién llegado</span></div>' +
         '<h3>' + esc(p.nombre) + (p.marca ? ' ' + esc(p.marca) : '') + '</h3>' +
         '<div class="mono">' + MY.precioHTML(p) + ' · Ver →</div></a>';
     }).join('');
@@ -131,27 +140,16 @@
     }
   }
 
-  /* ---------- 4. En hype: ranking, votos y muro ---------- */
+  /* ---------- 4. En hype: votos y muro (las tarjetas las pinta pintaCatalogo, sección "hype") ---------- */
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest ? e.target.closest('.voto') : null;
+    if (!b) return;
+    var ref = b.getAttribute('data-ref');
+    if (MY.lee('voto-' + ref) === '1') return;              // un voto por producto por navegador
+    MY.guarda('voto-' + ref, '1'); b.setAttribute('aria-pressed', 'true'); b.textContent = 'Anotado ✓';
+    if (MY.script) fetch(MY.script, { method: 'POST', body: JSON.stringify({ tipo: 'voto', ref: ref }) }).catch(function () {});
+  });
   function pintaHype() {
-    var lista = visibles().filter(function (p) { return p.hype; });
-    var hayVotos = Object.keys(votos).length > 0;          // los números solo salen si vienen de la hoja (reales)
-    if (hayVotos) lista = lista.slice().sort(function (a, b) { return (votos[b.ref] || 0) - (votos[a.ref] || 0); });
-    $('#ranking').innerHTML = lista.map(function (p, i) {
-      var ya = MY.lee('voto-' + p.ref) === '1', n = votos[p.ref] || 0;
-      return '<div class="rank sube' + (yaPintado ? ' in' : '') + '"><div class="n">' + (i < 9 ? '0' : '') + (i + 1) + '</div>' +
-        '<div><h3><a href="#' + esc(p.ref) + '">' + esc(p.nombre) + '</a></h3><div class="mono meta">' + esc(p.marca || '') + ' · Bajo encargo · Ref. ' + esc(p.ref) +
-        (hayVotos && n ? ' · ' + n + (n === 1 ? ' persona lo quiere' : ' personas lo quieren') : '') + '</div></div>' +
-        '<div class="acc"><button class="btn voto" data-ref="' + esc(p.ref) + '" aria-pressed="' + ya + '">' + (ya ? 'Anotado ✓' : 'Yo también lo quiero') + '</button>' +
-        '<a class="btn solid" data-b="hype" data-ref="' + esc(p.ref) + '" target="_blank" rel="noopener" href="' + esc(MY.wa(MY.msj.producto(p))) + '">Pedir encargo →</a></div></div>';
-    }).join('');
-    $$('.voto').forEach(function (b) {
-      b.addEventListener('click', function () {
-        var ref = b.getAttribute('data-ref');
-        if (MY.lee('voto-' + ref) === '1') return;            // un voto por producto por navegador
-        MY.guarda('voto-' + ref, '1'); b.setAttribute('aria-pressed', 'true'); b.textContent = 'Anotado ✓';
-        if (MY.script) fetch(MY.script, { method: 'POST', body: JSON.stringify({ tipo: 'voto', ref: ref }) }).catch(function () {});
-      });
-    });
     // Muro: solo llega lo que el dueño marcó "aprobado" en la hoja. Siempre escapado.
     var muro = MY.datos.muro || [];
     $('#muro').hidden = !muro.length;

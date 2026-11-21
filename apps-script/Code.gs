@@ -20,7 +20,7 @@ const HOJA = SpreadsheetApp.getActiveSpreadsheet();
 
 /* ---------- 1. Listas permitidas (son las listas desplegables de la hoja) ---------- */
 const SECCIONES = ['hombre', 'mujer', 'hype'];
-const CATEGORIAS = ['tenis', 'camisetas', 'polos', 'buzos', 'hoodies', 'chaquetas', 'pantalones', 'pantalonetas', 'shorts', 'tops', 'sandalias', 'morrales', 'gorras', 'accesorios'];
+const CATEGORIAS = ['tenis', 'camisetas', 'polos', 'buzos', 'hoodies', 'chaquetas', 'pantalones', 'pantalonetas', 'shorts', 'tops', 'vestidos', 'sandalias', 'morrales', 'gorras', 'accesorios'];
 const ESTADOS_PRODUCTO = ['stock', 'encargo', 'agotado'];
 const ESTADOS_ENCARGO = ['Recibido', 'Separado', 'Comprado en Nueva York', 'En camino', 'En Medellín', 'Entregado'];
 const SI_NO = ['sí', 'no'];
@@ -157,11 +157,21 @@ function sembrar(nombre, h) {
       ["MY-0230", "Camiseta", "Nike", "mujer", "camisetas", "Gris", "M", 90000, "", "sí", "stock", "my-0230.webp", "no", "no", "sí"],
       ["MY-0231", "Camiseta", "Adidas", "mujer", "camisetas", "Blanco", "M", 90000, "", "sí", "stock", "my-0231.webp", "no", "no", "sí"],
       ["MY-0232", "Short deportivo", "Nike", "mujer", "shorts", "Azul oscuro y morado", "M, L", 110000, "", "sí", "stock", "my-0232.webp", "no", "no", "sí"],
-      ["MY-0301", "Air Max Dn8", "Nike", "hype", "tenis", "", "", "", "", "no", "encargo", "", "sí", "no", "sí"],
-      ["MY-0302", "Air Force 1 '07", "Nike", "hype", "tenis", "", "", "", "", "no", "encargo", "", "sí", "no", "sí"],
-      ["MY-0304", "Samba OG", "Adidas", "hype", "tenis", "", "", "", "", "no", "encargo", "", "sí", "no", "sí"],
-      ["MY-0306", "Air Jordan 1 Low", "Jordan", "hype", "tenis", "", "", "", "", "no", "encargo", "", "sí", "no", "sí"],
-      ["MY-0307", "Air Jordan 4", "Jordan", "hype", "tenis", "", "", "", "", "no", "encargo", "", "sí", "no", "sí"],
+      ["MY-0401", "Air Jordan 1 High OG", "Jordan", "hype", "tenis", "Negro / rojo", "7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 13, 14", 750000, "", "no", "encargo", "my-0401.webp", "sí", "no", "sí"],
+      ["MY-0402", "New Balance 9060", "New Balance", "hype", "tenis", "Negro / gris", "4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9.5, 10, 11.5, 12, 13, 14, 15", 580000, "", "no", "encargo", "my-0402.webp", "sí", "no", "sí"],
+      ["MY-0403", "Nike Zoom Vomero 5", "Nike", "hype", "tenis", "Khaki / oliva", "7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 14, 15", 650000, "", "no", "encargo", "my-0403.webp", "sí", "no", "sí"],
+      ["MY-0404", "Nike Air Max 95 Big Bubble (mujer)", "Nike", "hype", "tenis", "Negro / gris", "5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10", 620000, "", "no", "encargo", "my-0404.webp", "sí", "no", "sí"],
+      ["MY-0405", "Nike Dunk Low (mujer)", "Nike", "hype", "tenis", "Blanco / rosa", "5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12", 480000, "", "no", "encargo", "my-0405.webp", "sí", "no", "sí"],
+      ["MY-0406", "Polo slim fit rayas en contraste", "BOSS", "hype", "polos", "Beige", "S, M, L, XL, XXL", 380000, "", "no", "encargo", "my-0406.webp", "sí", "no", "sí"],
+      ["MY-0407", "Polo Signature Flag Stripe", "Tommy Hilfiger", "hype", "polos", "Verde", "XS, S, M, L, XL, XXL", 270000, "", "no", "encargo", "my-0407.webp", "sí", "no", "sí"],
+      ["MY-0408", "Supreme Paris Tee FW26", "Supreme", "hype", "camisetas", "Negro", "M", 450000, "", "no", "encargo", "my-0408.webp", "sí", "no", "sí"],
+      ["MY-0409", "Corteiz x Denim Tears OG Alcatraz Tee", "Corteiz", "hype", "camisetas", "Negro", "M", 580000, "", "no", "encargo", "my-0409.webp", "sí", "no", "sí"],
+      ["MY-0410", "Godspeed High Stakes Tee", "Godspeed", "hype", "camisetas", "Negro", "M", 420000, "", "no", "encargo", "my-0410.webp", "sí", "no", "sí"],
+      ["MY-0411", "Buzo logo perfume (mujer)", "Karl Lagerfeld", "hype", "buzos", "Negro", "S", 350000, "", "no", "encargo", "my-0411.webp", "sí", "no", "sí"],
+      ["MY-0412", "Buzo monogram cuello alto (mujer)", "Calvin Klein", "hype", "buzos", "Rojo", "S", 390000, "", "no", "encargo", "my-0412.webp", "sí", "no", "sí"],
+      ["MY-0413", "Buzo tejido trenzado (mujer)", "U.S. Polo Assn.", "hype", "buzos", "Crudo", "S", 260000, "", "no", "encargo", "my-0413.webp", "sí", "no", "sí"],
+      ["MY-0414", "Buzo tejido trenzado manga larga (mujer)", "Tommy Hilfiger", "hype", "buzos", "Vino tinto", "S", 330000, "", "no", "encargo", "my-0414.webp", "sí", "no", "sí"],
+      ["MY-0415", "Alosoft Courtside Tennis Dress (mujer)", "Alo", "hype", "vestidos", "Blanco", "XXS, XS, S, M, L", 450000, "", "no", "encargo", "my-0415.webp", "sí", "no", "sí"],
       ['EJEMPLO', 'Fila de ejemplo: cópiala y cambia los datos', 'Nike', 'hombre', 'tenis', 'Blanco', '8, 9, 10', 520000, 480000, 'sí', 'stock', 'my-0109.webp, my-0109-b.webp', 'no', 'sí', 'no']
     ],
     Config: [
