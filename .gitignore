@@ -1,0 +1,9 @@
+# No se publican: materiales originales pesados, configuración local, muestra de arte y respaldos
+Recursos/
+.claude/
+direccion-de-arte.html
+*.zip
+__pycache__/
+catalogo-numerado/
+/*.jpg
+grabacion de prendas .mp4

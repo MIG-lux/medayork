@@ -25,7 +25,7 @@
 <!-- Las letras cargan sin frenar la primera pantalla (media="print" y luego se activan) -->
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
 <noscript><link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@900&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Serif:ital@1&family=Inter:wght@400;500&display=swap" rel="stylesheet"></noscript>
-<link rel="stylesheet" href="css/estilos.css?v=20261120">
+<link rel="stylesheet" href="css/estilos.css?v=20261123">
 <link rel="preload" as="image" href="img/portada-v.webp" media="(max-width:759px)">
 <link rel="preload" as="image" href="img/portada-h.webp" media="(min-width:760px)">
 <script type="application/ld+json">
@@ -38,6 +38,7 @@
 <a class="cinta mono" id="cinta" href="#black-friday" hidden><b>Black Friday Medayork</b> · rebajas en lo que ya está en Medellín →</a>
 
 <nav class="nav" aria-label="Principal"><div class="wrap">
+  <button class="menu-btn" id="menu-btn" type="button" aria-label="Abrir menú" aria-controls="menu" aria-expanded="false"><span></span><span></span><span></span></button>
   <a class="logo" href="#portada" aria-label="Medayork, inicio"><img src="img/estatua-claro.png" alt="" width="89" height="120"><b>MEDAYORK</b></a>
   <div class="links mono">
     <a href="#hombre">Hombre</a><a href="#mujer">Mujer</a><a href="#hype">En hype</a><a href="#seguimiento">Sigue tu encargo</a><a href="#preguntas">Preguntas</a>
@@ -306,6 +307,22 @@
 </footer>
 
 <!-- Ficha de producto: etiqueta de equipaje. La llena js/app.js -->
+<!-- Menú de tres rayitas: Hombre, Mujer y En hype con sus categorías (las arma js/app.js) -->
+<dialog class="menu" id="menu" aria-label="Menú">
+  <div class="menu-panel">
+    <div class="menu-cab"><span class="mono">[ MDE ⇄ JFK ]</span><button class="cerrar" data-cerrar-menu type="button" aria-label="Cerrar menú">✕</button></div>
+    <div id="menu-secciones"></div>
+    <div class="menu-otros mono">
+      <a href="#black-friday" id="menu-bf" hidden>Black Friday</a>
+      <a href="#llegadas">Llegó y está en hype</a>
+      <a href="#seguimiento">Sigue tu encargo</a>
+      <a href="#tallas">Guía de tallas</a>
+      <a href="#preguntas">Preguntas frecuentes</a>
+    </div>
+    <a class="btn solid" data-wa="general" data-b="menu" href="https://wa.me/573226759950">Pedir por WhatsApp →</a>
+  </div>
+</dialog>
+
 <dialog class="ficha" id="ficha" aria-labelledby="ficha-t">
   <div class="etiqueta">
     <button class="cerrar" data-cerrar type="button" aria-label="Cerrar">✕</button>
@@ -317,8 +334,8 @@
 
 <!-- Orden obligatorio: conexión → respaldo → datos compartidos → página -->
 <script src="datos/conexion.js?v=20261117" defer></script>
-<script src="datos/respaldo.js?v=20261120" defer></script>
+<script src="datos/respaldo.js?v=20261123" defer></script>
 <script src="js/datos.js?v=20261120" defer></script>
-<script src="js/app.js?v=20261120" defer></script>
+<script src="js/app.js?v=20261123" defer></script>
 </body>
 </html>
