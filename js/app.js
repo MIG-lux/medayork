@@ -324,6 +324,41 @@
     document.head.appendChild(s);
   }
 
+  /* ---------- 7b. Menú de tres rayitas ---------- */
+  // Arma Hombre / Mujer / En hype con sus categorías y cuántas prendas hay en cada una.
+  // Al tocar una categoría, deja ese filtro puesto en la sección y baja hasta ella.
+  var menu = $('#menu'), menuBtn = $('#menu-btn');
+  var NOMBRES = { hombre: 'Hombre', mujer: 'Mujer', hype: 'En hype · por encargo' };
+  function pintaMenu() {
+    $('#menu-bf').hidden = MY.estadoBF() !== 'abierto';
+    $('#menu-secciones').innerHTML = ['hombre', 'mujer', 'hype'].map(function (s) {
+      var lista = visibles().filter(function (p) { return p.seccion === s && p.fotos && p.fotos.length; });
+      if (!lista.length) return '';
+      var cats = {};
+      lista.forEach(function (p) { if (p.categoria) cats[p.categoria] = (cats[p.categoria] || 0) + 1; });
+      return '<div class="menu-g"><a class="menu-tit disp" href="#' + s + '" data-ir="' + s + '" data-cat="todo">' + NOMBRES[s] + ' <span class="mono">' + lista.length + '</span></a>' +
+        '<div class="menu-cats">' + Object.keys(cats).map(function (c) {
+          return '<a class="mono" href="#' + s + '" data-ir="' + s + '" data-cat="' + esc(c) + '">' + esc(c) + ' <b>' + cats[c] + '</b></a>';
+        }).join('') + '</div></div>';
+    }).join('');
+  }
+  function abreMenu() { pintaMenu(); if (menu.showModal) menu.showModal(); else menu.setAttribute('open', ''); menuBtn.setAttribute('aria-expanded', 'true'); }
+  function cierraMenu() { if (menu.close) menu.close(); else menu.removeAttribute('open'); }
+  menuBtn.addEventListener('click', abreMenu);
+  menu.addEventListener('close', function () { menuBtn.setAttribute('aria-expanded', 'false'); });
+  menu.addEventListener('click', function (e) {
+    if (e.target === menu || e.target.closest('[data-cerrar-menu]')) { cierraMenu(); return; }
+    var a = e.target.closest('a'); if (!a) return;
+    var s = a.getAttribute('data-ir');
+    if (s && filtros[s]) {                                       // poner el filtro de esa categoría
+      e.preventDefault();
+      filtros[s].cat = a.getAttribute('data-cat'); filtros[s].estado = 'todo'; filtros[s].limite = POR_TANDA;
+      yaPintado = true; pintaCatalogo(); cierraMenu();
+      var destino = $('#' + s + ' [data-filtros]') || $('#' + s);
+      destino.scrollIntoView({ behavior: MY.quieto ? 'auto' : 'smooth', block: 'start' });
+    } else if (!a.hasAttribute('data-wa')) cierraMenu();
+  });
+
   /* ---------- 8. Arranque ---------- */
   function pintaTodo() {
     var c = MY.datos.config || {};
