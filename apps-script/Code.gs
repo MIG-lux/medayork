@@ -77,6 +77,11 @@ function prepararHoja() {
 function sembrar(nombre, h) {
   const filas = {
     Catalogo: [
+      ["MY-0157", "Pantalón Tech bota ancha", "Nike", "hombre", "pantalones", "Negro", "M", 380000, "", "sí", "stock", "my-0157.webp", "no", "no", "sí"],
+      ["MY-0161", "Sudadera", "Jordan", "hombre", "pantalones", "Negro", "M", 220000, "", "sí", "stock", "my-0161.webp", "no", "no", "sí"],
+      ["MY-0162", "Camiseta estampada oversize", "Jordan", "hombre", "camisetas", "Negro", "S", 140000, "", "sí", "stock", "my-0162.webp", "no", "no", "sí"],
+      ["MY-0159", "Pantaloneta Diamond", "Jordan", "hombre", "pantalonetas", "Blanco", "M", 140000, "", "sí", "stock", "my-0159.webp", "no", "no", "sí"],
+      ["MY-0154", "Hoodie", "Nike", "hombre", "hoodies", "Gris", "", 150000, "", "sí", "stock", "my-0154.webp", "no", "no", "sí"],
       ["MY-0138", "Cortavientos con logo Jordan", "Nike", "hombre", "chaquetas", "Azul oscuro y blanco", "XL", 200000, "", "sí", "stock", "my-0138.webp", "no", "sí", "sí"],
       ["MY-0131", "Camiseta Jumpman Air", "Jordan", "hombre", "camisetas", "Negro", "M", 120000, "", "sí", "stock", "my-0131.webp", "no", "sí", "sí"],
       ["MY-0105", "Polo", "Nike", "hombre", "polos", "Azul oscuro", "M", 130000, "", "sí", "stock", "my-0105.webp", "no", "no", "sí"],
@@ -90,6 +95,7 @@ function sembrar(nombre, h) {
       ["MY-0139", "Camiseta oversize", "Jordan", "hombre", "camisetas", "Azul", "XL", 120000, "", "sí", "stock", "my-0139.webp", "no", "no", "sí"],
       ["MY-0144", "Camiseta Globe", "Jordan", "hombre", "camisetas", "Blanco hueso", "M, L", 120000, "", "sí", "stock", "my-0144.webp", "no", "no", "sí"],
       ["MY-0140", "Cortavientos", "Nike", "hombre", "chaquetas", "Azul y blanco", "M", 200000, "", "sí", "stock", "my-0140.webp", "no", "no", "sí"],
+      ["MY-0233", "Sudadera", "Nike", "mujer", "pantalones", "Azul oscuro", "S", 180000, "", "sí", "stock", "my-0233.webp", "no", "no", "sí"],
       ["MY-0101", "Camiseta estampada", "Nike", "hombre", "camisetas", "Negro", "L", 110000, "", "sí", "stock", "my-0101.webp", "no", "no", "sí"],
       ["MY-0102", "Camiseta Trefoil", "Adidas", "hombre", "camisetas", "Negro", "L", 90000, "", "sí", "stock", "my-0102.webp", "no", "no", "sí"],
       ["MY-0103", "Camiseta Trefoil", "Adidas", "hombre", "camisetas", "Blanco", "L", 90000, "", "sí", "stock", "my-0103.webp", "no", "no", "sí"],
@@ -157,6 +163,11 @@ function sembrar(nombre, h) {
       ["MY-0230", "Camiseta", "Nike", "mujer", "camisetas", "Gris", "M", 90000, "", "sí", "stock", "my-0230.webp", "no", "no", "sí"],
       ["MY-0231", "Camiseta", "Adidas", "mujer", "camisetas", "Blanco", "M", 90000, "", "sí", "stock", "my-0231.webp", "no", "no", "sí"],
       ["MY-0232", "Short deportivo", "Nike", "mujer", "shorts", "Azul oscuro y morado", "M, L", 110000, "", "sí", "stock", "my-0232.webp", "no", "no", "sí"],
+      ["MY-0155", "Pantaloneta cargo", "Jordan", "hombre", "pantalonetas", "Verde oliva", "M", 140000, "", "sí", "stock", "my-0155.webp", "no", "no", "sí"],
+      ["MY-0156", "Pantaloneta Pro", "Nike", "hombre", "pantalonetas", "Gris oscuro", "M", 140000, "", "sí", "stock", "my-0156.webp", "no", "no", "sí"],
+      ["MY-0158", "Pantaloneta", "Nike", "hombre", "pantalonetas", "Crema", "L", 120000, "", "sí", "stock", "my-0158.webp", "no", "no", "sí"],
+      ["MY-0160", "Pantaloneta", "Nike", "hombre", "pantalonetas", "Negro", "M", 140000, "", "sí", "stock", "my-0160.webp", "no", "no", "sí"],
+      ["MY-0163", "Pantaloneta", "Nike", "hombre", "pantalonetas", "Azul claro", "XL", 150000, "", "sí", "stock", "my-0163.webp", "no", "no", "sí"],
       ["MY-0401", "Air Jordan 1 High OG", "Jordan", "hype", "tenis", "Negro / rojo", "7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 13, 14", 750000, "", "no", "encargo", "my-0401.webp", "sí", "no", "sí"],
       ["MY-0402", "New Balance 9060", "New Balance", "hype", "tenis", "Negro / gris", "4, 4.5, 5, 5.5, 6, 6.5, 7, 7.5, 8, 8.5, 9.5, 10, 11.5, 12, 13, 14, 15", 580000, "", "no", "encargo", "my-0402.webp", "sí", "no", "sí"],
       ["MY-0403", "Nike Zoom Vomero 5", "Nike", "hype", "tenis", "Khaki / oliva", "7, 7.5, 8, 8.5, 9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5, 13, 14, 15", 650000, "", "no", "encargo", "my-0403.webp", "sí", "no", "sí"],
